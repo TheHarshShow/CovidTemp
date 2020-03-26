@@ -4,17 +4,30 @@
     <meta charset="utf-8">
     <title></title>
   </head>
+  {% if not messages %}
+  <body onload="geoFindMe()">
+  {% else %}
   <body>
-    <button id = "find-me">Show my location</button><br/>
+  {% endif %}
     <p id = "status"></p>
     <a id = "map-link" target="_blank"></a>
 
+
+    <form action="{% url 'main_page' %}" method="post">
+      {% csrf_token %}
+      <input id="latitude" type="text" name="latitude" value="">
+      <input id="longitude" type="text" name="longitude" value="">
+      <input id="latLonSubmit" type="submit" name="coordinatesSubmitted" value="">
+    </form>
 
     <script type="text/javascript">
       function geoFindMe() {
 
         const status = document.querySelector('#status');
         const mapLink = document.querySelector('#map-link');
+        const latLink = document.getElementById('latitude')
+        const lonLink = document.getElementById('longitude')
+        const submitCoor = document.getElementById('latLonSubmit')
 
         mapLink.href = '';
         mapLink.textContent = '';
@@ -26,6 +39,12 @@
           status.textContent = '';
           mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
           mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+
+          lonLink.value = longitude
+          latLink.value = latitude
+          submitCoor.click()
+
+
         }
 
         function error() {
@@ -41,7 +60,7 @@
 
       }
 
-      document.querySelector('#find-me').addEventListener('click', geoFindMe);
+
     </script>
 
   </body>
