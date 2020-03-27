@@ -9,6 +9,7 @@
   {% else %}
   <body>
   {% endif %}
+
     <p id = "status"></p>
     <a id = "map-link" target="_blank"></a>
 
@@ -19,6 +20,23 @@
       <input id="longitude" type="text" name="longitude" value="">
       <input id="latLonSubmit" type="submit" name="coordinatesSubmitted" value="">
     </form>
+
+    <h1>Nearby Shops</h1>
+
+    {% if request.session.requests %}
+    <ul>
+      {% for req in request.session.requests %}
+
+          <li>{{ req }}</li>
+
+      {% endfor %}
+    </ul>
+
+
+    {% endif %}
+
+
+
 
     <script type="text/javascript">
       function geoFindMe() {

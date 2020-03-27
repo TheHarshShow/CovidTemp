@@ -12,13 +12,13 @@ class Request(models.Model):
 
     #details of person requesting
     requestor=models.CharField(max_length=100)
-    location = models.PointField()
+    location = models.PointField(srid=4326,geography=True)
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
 
     #requirement details
     requirement = models.CharField(max_length=100)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     priority = models.IntegerField(default=0);
     created = models.DateTimeField(auto_now_add=True)
 
